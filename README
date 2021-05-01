@@ -19,3 +19,10 @@ docker inspect <container-name>
 # In the example below container can't write files in the host machine
 docker run -d -p 3000:3000 -v %cd%:/app:ro -v /app/node_modules --name node-app node-app-image
 
+# Add Env Variables in the Dockerfile 
+
+# Add Env Var in the Run Time 
+docker run -v %cd%:/app -v /app/node_modules --env PORT=4000 -p 3000:4000 -d --name node-app node-app-image
+
+
+# Add Env Variables with .env file
