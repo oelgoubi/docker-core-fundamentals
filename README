@@ -10,3 +10,12 @@ docker run -v G:/DevWebCareer/LearningDocker:/app -v /app/node_modules -p 3000:3
 # NB IMPORTANT : add "nodemon -L server.js" because the flag -L is very Important : --legacy-watch or -L
 
 # remove running container and the volume associated with it
+docker rm <container-name> -fv
+
+# Insect the conainer " mounts / networking "
+docker inspect <container-name> 
+
+# make a volume read only or write only by Adding the flag :ro or :wo 
+# In the example below container can't write files in the host machine
+docker run -d -p 3000:3000 -v %cd%:/app:ro -v /app/node_modules --name node-app node-app-image
+
