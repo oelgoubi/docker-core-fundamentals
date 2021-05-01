@@ -26,3 +26,10 @@ docker run -v %cd%:/app -v /app/node_modules --env PORT=4000 -p 3000:4000 -d --n
 
 
 # Add Env Variables with .env file
+
+# docker-compose.yml : to handle multiple services 
+# Build the image and run the container ( but if the image exist he will use it directly ) learningdocker_node-app ( project dir + name of service)
+# NB : we should force docker-compose to rebuild the image each time 
+docker-compose up -d --build
+
+docker-compose down -v
