@@ -1,0 +1,12 @@
+# Build an image after creating a Docker file
+docker build -t image-name .
+
+# run the container and create a volume ( Type : Bind Mount)
+docker run -d -p 3000:3000 -v %cd%:/app -v /app/node_modules --name node-app node-app-image    # On CMD
+docker run -v G:/DevWebCareer/LearningDocker:/app -v /app/node_modules -p 3000:3000 -d --name node-app node-app-image
+
+# PWD : full path on GitBash : pwd -W
+
+# NB IMPORTANT : add "nodemon -L server.js" because the flag -L is very Important : --legacy-watch or -L
+
+# remove running container and the volume associated with it
