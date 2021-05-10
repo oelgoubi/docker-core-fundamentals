@@ -39,6 +39,10 @@ docker-compose down -v
 # Run the ENV Version : 
 $ docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 
-# Run the Prod Version :
+# Run the Prod Version and force build:
 $ docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build   # force build
 
+# Connect to a mongo container ( mongo shell )
+docker exec -it learningdocker_mongo_1 mongo -u othy -p pass
+
+# Create volume for our mongodb to save data 

@@ -7,3 +7,12 @@ services:
             - "3000:4000"
         env_file:
             - ./.env
+    mongo:
+        image: mongo
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=othy
+            - MONGO_INITDB_ROOT_PASSWORD=pass
+        volumes: 
+            - mongo-db:/data/db
+volumes: # Declare the volume
+    mongo-db:
