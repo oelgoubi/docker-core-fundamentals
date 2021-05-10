@@ -1,6 +1,14 @@
 const express = require("express");
+const mongoose = require("mongoose")
 
 const app = express();
+
+mongoose.connect("mongodb://othy:pass@mongo:27017/?authSource=admin",
+{ useUnifiedTopology: true,useNewUrlParser: true })
+.then(()=>{
+    console.log("successfully connected to db")
+})
+.catch((e)=> console.log(e))
 
 const port = process.env.PORT || 3000;
 
