@@ -1,7 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const { MONGO_IP, MONGO_PORT, MONGO_USER, MONGO_PWD } = require('./config/config');
-const postRoutes = require("./routes/postRoutes")
+const postRoutes = require("./routes/postRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 // Parse the  body and make sure that the body object is attached to req
@@ -27,6 +28,8 @@ connectWithRetry();
 app.get("/", (req, res, next) => {
     res.send("Hello Lovely Docker ! Let's play with it now using docker-compose, No Changes");
 })
+
+app.use("/api/v1/users",authRoutes)
 
 app.use("/api/v1/posts",postRoutes)
 
