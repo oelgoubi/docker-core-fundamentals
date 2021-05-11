@@ -1,8 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const { MONGO_IP, MONGO_PORT, MONGO_USER, MONGO_PWD } = require('./config/config')
+const { MONGO_IP, MONGO_PORT, MONGO_USER, MONGO_PWD } = require('./config/config');
+const postRoutes = require("./routes/postRoutes")
 
 const app = express();
+// Parse the  body and make sure that the body object is attached to req
+app.use(express.json());
 
 // Retry to connect to our DB until success -- NB : Not a Best practice but it do the job
 const connectWithRetry = () => {
@@ -19,17 +22,15 @@ const connectWithRetry = () => {
 
 connectWithRetry();
 
-const port = process.env.PORT || 3000;
+
 
 app.get("/", (req, res, next) => {
     res.send("Hello Lovely Docker ! Let's play with it now using docker-compose, No Changes");
 })
 
-app.get("/hey", (req, res, next) => {
-    res.send("Hello From Docker container using Docker compose Up");
-})
+app.use("/api/v1/posts",postRoutes)
 
-
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Server is Running on Port ${port}`)
 })

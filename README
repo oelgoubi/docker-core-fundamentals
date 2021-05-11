@@ -64,3 +64,6 @@ $ docker logs learningdocker_node-app_1 -f
 
 # Start only a service without relying on dependencies
 $ docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d node_app --no-deps 
+
+# Express NB : exports.function = access multiple functions in a file
+# exports.modules = m ;   const m1  = require("..")
