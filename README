@@ -46,3 +46,21 @@ $ docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build 
 docker exec -it learningdocker_mongo_1 mongo -u othy -p pass
 
 # Create volume for our mongodb to save data 
+
+## Docker networking
+$ docker network ls  # get all the default and created networks
+# Rule : The container created using a docker-compose belong to a default network 
+[nameFolder]_default 
+# Inspect a network
+$ docker network inspect [network_name]
+We can check if a container is reacheable from another container by ping it 
+using the name of the service 
+bash into the node_app conainer and then ping mongo
+$ ping mongo
+
+# Create config FILE to hold env variables 
+# Logs the server message 
+$ docker logs learningdocker_node-app_1 -f
+
+# Start only a service without relying on dependencies
+$ docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d node_app --no-deps 

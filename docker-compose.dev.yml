@@ -6,4 +6,10 @@ services:
             - /app/node_modules
         environment: 
             - NODE_ENV=development
+            - MONGO_USER=othy
+            - MONGO_PWD=pass
         command: npm run dev
+    mongo:
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=othy
+            - MONGO_INITDB_ROOT_PASSWORD=pass
