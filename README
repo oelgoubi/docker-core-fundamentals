@@ -67,3 +67,18 @@ $ docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d node_app
 
 # Express NB : exports.function = access multiple functions in a file
 # exports.modules = m ;   const m1  = require("..")
+
+### APP AUTH
+I'm using express-session as an auth method 
+I will store session IDs in a redis db that will run inside a container
+Follow instructions on https://www.npmjs.com/package/connect-redis
+
+1- Setup Redis and Redis Client
+2- Create a Session whenever a user logged in
+3- After each request , check the cookie in the browser or in the redis db
+$ docker exec -it redis_container redis-cli
+# KEYS *     to display the array of session IDS
+# GET "sess:whtrCwEzcG2bzkn7fTi7jOJSNu6N6PUA"        to get the details and the info we stored in our session
+# Instead of bringing the containers down, we can force them to rebuild but recreate volumes in order to store new dependencies with the option ( -V )
+$ docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build --help -V
+

@@ -10,6 +10,8 @@ exports.signUp = async (req, res, next) => {
             password : hashedpassword
         });
 
+        // Create session and Logg In the user
+        req.session.user = user
         res.status(201).json({
             status: "success",
             user
@@ -40,7 +42,8 @@ exports.login = async (req, res, next) => {
                 Message : 'Password is not Correct'
             })
         }
-
+        // Create session and store some data in it
+        req.session.user = user
         res.status(200).json({
             status: "success ! You're Logged In",
         })

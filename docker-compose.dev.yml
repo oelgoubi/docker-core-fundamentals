@@ -8,6 +8,7 @@ services:
             - NODE_ENV=development
             - MONGO_USER=othy
             - MONGO_PWD=pass
+            - REDIS_SECRET=MySecret
         command: npm run dev
     mongo:
         environment:

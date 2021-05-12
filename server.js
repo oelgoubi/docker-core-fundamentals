@@ -1,10 +1,36 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const { MONGO_IP, MONGO_PORT, MONGO_USER, MONGO_PWD } = require('./config/config');
+const redis = require('redis')
+const session = require('express-session')
+const { MONGO_IP, MONGO_PORT, MONGO_USER, MONGO_PWD, REDIS_URL, REDIS_PORT,REDIS_SECRET } = require('./config/config');
 const postRoutes = require("./routes/postRoutes");
 const authRoutes = require("./routes/authRoutes");
+const protect = require("./middlewares/authMiddleware")
+
+// Create Redis store :
+let RedisStore = require('connect-redis')(session)
+let redisClient = redis.createClient({
+    host: REDIS_URL,
+    port: REDIS_PORT
+})
 
 const app = express();
+
+// Use session middleware
+app.use(
+    session({
+      store: new RedisStore({ client: redisClient }),
+      secret: REDIS_SECRET,
+      cookie:{
+          secure: false,
+          resave:false,
+          saveUninitialized:false,
+          httpOnly: true, // JS IN THE BROWSER CAN NOT ACCESS OUR COOKIE
+          maxAge:30000
+      }
+    })
+  )
+
 // Parse the  body and make sure that the body object is attached to req
 app.use(express.json());
 
@@ -31,7 +57,7 @@ app.get("/", (req, res, next) => {
 
 app.use("/api/v1/users",authRoutes)
 
-app.use("/api/v1/posts",postRoutes)
+app.use("/api/v1/posts",protect,postRoutes)
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
