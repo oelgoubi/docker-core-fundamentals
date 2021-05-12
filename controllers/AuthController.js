@@ -3,9 +3,8 @@ const bcrypt = require("bcryptjs")
 
 exports.signUp = async (req, res, next) => {
     const { username, password } = req.body;
-    console.log(password)
-    const hashedpassword = await bcrypt.hash(password,12);
     try {
+        const hashedpassword = await bcrypt.hash(password,12);
         const user = await User.create({
             username,
             password : hashedpassword
@@ -23,15 +22,27 @@ exports.signUp = async (req, res, next) => {
     }
 }
 
-exports.createPost = async (req, res, next) => {
+exports.login = async (req, res, next) => {
+    const { username, password } = req.body;
     try {
-        const post = await Post.create(req.body);
+        const user = await User.findOne({username});
+        if(!user){
+            res.status(404).json({
+                Message : 'User Not Found'
+            })
+        }
+
+        const isCorrect = await bcrypt.compare(password,user.password);
+
+        if(!isCorrect)
+        {
+            res.status(400).json({
+                Message : 'Password is not Correct'
+            })
+        }
 
         res.status(200).json({
-            status: "success",
-            data: {
-                post
-            } 
+            status: "success ! You're Logged In",
         })
     } catch (error) {
         res.status(500).json({

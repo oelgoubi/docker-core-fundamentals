@@ -10,6 +10,6 @@ router
     
 router
     .route('/login')
-    .post(authController.signUp)
+    .post(authController.login)
 
 module.exports = router;
